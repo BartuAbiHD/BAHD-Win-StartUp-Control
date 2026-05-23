@@ -6,6 +6,10 @@
 
 *Bu belgeyi diğer dillerde okuyun: [English](README.md)*
 
+<div align="center">
+  <img width="800" alt="Dashboard Ekran Görüntüsü" src="https://github.com/user-attachments/assets/00e518f4-06e2-4633-aff8-addc30dfaa5a" />
+</div>
+
 ## Özellikler
 
 BAHD Win StartUp Control, Python ve PyWebView ile geliştirilmiş, gücünü Tailwind CSS'ten alan modern ve şık bir arayüze sahip bir sistem aracıdır (v1.0.0).
