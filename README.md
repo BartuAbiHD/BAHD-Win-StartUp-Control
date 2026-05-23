@@ -4,7 +4,11 @@
   <p>A modern, lightweight, and powerful Windows startup and service manager.</p>
 </div>
 
-*Read this in other languages: [Turkish](README_TR.md)*
+*Read this in other languages: [Türkçe](README_TR.md)*
+
+<div align="center">
+  <img width="800" alt="Dashboard Screenshot" src="https://github.com/user-attachments/assets/07a66e8d-696e-403c-a46c-e6ee423bd9ec" />
+</div>
 
 ## Features
 
