@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="app_title">BAHD Win StartUp Control</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        bgMain: 'var(--bg-main)',
+                        bgSidebar: 'var(--bg-sidebar)',
+                        bgCard: 'var(--bg-card)',
+                        borderSubtle: 'var(--border-subtle)',
+                        textMain: 'var(--text-main)',
+                        textMuted: 'var(--text-muted)',
+                        accentBlue: 'var(--accent-blue)',
+                        accentBlueHover: 'var(--accent-blue-hover)',
+                        statusActive: '#10b981',
+                        statusDisabled: '#f59e0b',
+                        statusDanger: '#ef4444',
+                        codeBg: 'var(--code-bg)'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Segoe UI', 'sans-serif'],
+                        mono: ['Consolas', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="translations.js"></script>
+</head>
+<body class="bg-bgMain text-textMain font-sans h-screen flex overflow-hidden">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-bgSidebar border-r border-borderSubtle flex flex-col justify-between">
+        <div>
+            <!-- Logo -->
+            <div class="p-6 flex items-center gap-3">
+                <div class="bg-accentBlue p-2 rounded-md">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg leading-tight" data-i18n="app_title">BAHD Win StartUp Control</h1>
+                    <p class="text-[10px] text-textMuted tracking-wider font-semibold">SYSTEM UTILITY V1.0.0</p>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="mt-4 px-3 flex flex-col gap-1" id="sidebar-nav">
+                <a onclick="switchPage('dashboard')" id="nav-dashboard" class="flex items-center gap-3 px-3 py-2.5 bg-bgCard text-textMain rounded-md border-l-4 border-accentBlue sidebar-link cursor-pointer">
+                    <svg class="w-5 h-5 text-accentBlue nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                    <span class="font-medium text-sm" data-i18n="nav_dashboard">Dashboard</span>
+                </a>
+                <a onclick="switchPage('services')" id="nav-services" class="flex items-center gap-3 px-3 py-2.5 text-textMuted hover:text-textMain hover:bg-bgCard rounded-md transition-colors border-l-4 border-transparent sidebar-link cursor-pointer">
+                    <svg class="w-5 h-5 nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+                    <span class="font-medium text-sm" data-i18n="nav_services">System Services</span>
+                </a>
+                <a onclick="switchPage('registry')" id="nav-registry" class="flex items-center gap-3 px-3 py-2.5 text-textMuted hover:text-textMain hover:bg-bgCard rounded-md transition-colors border-l-4 border-transparent sidebar-link cursor-pointer">
+                    <svg class="w-5 h-5 nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
+                    <span class="font-medium text-sm" data-i18n="nav_registry">Registry Keys</span>
+                </a>
+                <a onclick="switchPage('settings')" id="nav-settings" class="flex items-center gap-3 px-3 py-2.5 text-textMuted hover:text-textMain hover:bg-bgCard rounded-md transition-colors border-l-4 border-transparent sidebar-link cursor-pointer">
+                    <svg class="w-5 h-5 nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    <span class="font-medium text-sm" data-i18n="nav_settings">Settings</span>
+                </a>
+            </nav>
+        </div>
+
+        <div class="px-3 pb-6 flex flex-col gap-1">
+            <a onclick="switchPage('help')" id="nav-help" class="flex items-center gap-3 px-3 py-2 text-textMuted hover:text-textMain transition-colors border-l-4 border-transparent sidebar-link cursor-pointer">
+                <svg class="w-5 h-5 nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <span class="font-medium text-sm" data-i18n="nav_help">Help</span>
+            </a>
+            <a onclick="switchPage('logs')" id="nav-logs" class="flex items-center gap-3 px-3 py-2 text-textMuted hover:text-textMain transition-colors border-l-4 border-transparent sidebar-link cursor-pointer">
+                <svg class="w-5 h-5 nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                <span class="font-medium text-sm" data-i18n="nav_logs">Logs</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-full relative">
+        <!-- Topbar -->
+        <header class="h-16 border-b border-borderSubtle flex items-center justify-between px-6 bg-bgMain">
+            <div class="flex items-center gap-4">
+                <button onclick="globalRefresh()" class="text-textMuted hover:text-textMain transition-colors" data-i18n-title="btn_refresh" title="Yenile">
+                    <svg id="global-refresh-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                </button>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <div class="relative">
+                    <select id="statusFilter" class="bg-bgCard border border-borderSubtle rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-accentBlue text-textMuted hover:text-textMain cursor-pointer transition-colors appearance-none">
+                        <option value="all" data-i18n="filter_all">Tümü (All)</option>
+                        <option value="active" data-i18n="filter_active">Etkin (Active)</option>
+                        <option value="disabled" data-i18n="filter_disabled">Devre Dışı (Disabled)</option>
+                    </select>
+                </div>
+                <div class="relative">
+                    <svg class="w-4 h-4 text-textMuted absolute left-3 top-1/2 transform -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    <input type="text" id="searchInput" data-i18n-placeholder="search_placeholder" placeholder="Search programs..." class="bg-bgCard border border-borderSubtle rounded-md pl-9 pr-4 py-1.5 text-sm w-64 focus:outline-none focus:border-accentBlue text-textMain placeholder-textMuted transition-colors">
+                </div>
+                <button onclick="importData()" data-i18n-title="btn_import" title="Listeyi İçe Aktar" class="text-textMuted hover:text-textMain transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                </button>
+                <button onclick="exportData()" data-i18n-title="btn_export" title="Listeyi Dışa Aktar" class="text-textMuted hover:text-textMain transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                </button>
+                <button onclick="switchPage('settings')" data-i18n-title="btn_settings" title="Gelişmiş Filtre / Ayarlar" class="text-textMuted hover:text-textMain transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Page Content Area -->
+        <div class="flex-1 overflow-y-auto relative">
+            
+            <!-- Dashboard Page -->
+            <div id="page-dashboard" class="p-6 page-content absolute inset-0 overflow-y-auto">
+                <h2 class="text-2xl font-bold mb-1" data-i18n="dash_title">Dashboard</h2>
+            <p class="text-textMuted text-sm mb-6" data-i18n="dash_desc">Manage applications that launch during the boot process.</p>
+            
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-4 gap-4 mb-6">
+                <div class="bg-bgCard border border-borderSubtle rounded-lg p-4">
+                    <h3 class="text-xs font-semibold text-textMuted uppercase tracking-wider mb-2" data-i18n="stat_total">Total Programs</h3>
+                    <div class="text-3xl font-bold text-textMain" id="stat-total">0</div>
+                </div>
+                <div class="bg-bgCard border border-borderSubtle rounded-lg p-4">
+                    <h3 class="text-xs font-semibold text-textMuted uppercase tracking-wider mb-2" data-i18n="stat_active">Active</h3>
+                    <div class="text-3xl font-bold text-statusActive" id="stat-active">0</div>
+                </div>
+                <div class="bg-bgCard border border-borderSubtle rounded-lg p-4">
+                    <h3 class="text-xs font-semibold text-textMuted uppercase tracking-wider mb-2" data-i18n="stat_disabled">Disabled</h3>
+                    <div class="text-3xl font-bold text-statusDisabled" id="stat-disabled">0</div>
+                </div>
+                <div class="bg-bgCard border border-borderSubtle rounded-lg p-4">
+                    <h3 class="text-xs font-semibold text-textMuted uppercase tracking-wider mb-2" data-i18n="stat_impact">Boot Impact</h3>
+                    <div class="text-3xl font-bold text-textMain">1.4s</div>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="border border-borderSubtle rounded-lg bg-bgCard overflow-hidden">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b border-borderSubtle text-xs font-semibold text-textMuted uppercase tracking-wider">
+                            <th class="py-3 px-4 font-semibold w-1/4" data-i18n="th_name">Program Name</th>
+                            <th class="py-3 px-4 font-semibold w-[40%]">File Path</th>
+                            <th class="py-3 px-4 font-semibold w-32" data-i18n="th_status">Status</th>
+                            <th class="py-3 px-4 font-semibold" data-i18n="th_location">Registry Location</th>
+                        </tr>
+                    </thead>
+                    <tbody id="programs-table-body" class="text-sm">
+                        <!-- Rows will be populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Services Page -->
+        <div id="page-services" class="p-6 page-content absolute inset-0 overflow-y-auto hidden">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h2 class="text-2xl font-bold mb-1" data-i18n="srv_title">System Services</h2>
+                    <p class="text-textMuted text-sm" data-i18n="srv_desc">Manage Windows background services.</p>
+                </div>
+                <button onclick="loadServices()" class="bg-bgCard border border-borderSubtle px-4 py-2 rounded text-sm font-medium hover:bg-borderSubtle transition-colors flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                    <span data-i18n="btn_refresh">Yenile</span>
+                </button>
+            </div>
+            
+            <div class="border border-borderSubtle rounded-lg bg-bgCard overflow-hidden">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b border-borderSubtle text-xs font-semibold text-textMuted uppercase tracking-wider bg-bgMain">
+                            <th class="py-3 px-4 font-semibold w-[25%]" data-i18n="th_srv_name">Service Name</th>
+                            <th class="py-3 px-4 font-semibold w-[35%]" data-i18n="th_srv_display">Display Name</th>
+                            <th class="py-3 px-4 font-semibold w-24" data-i18n="th_srv_status">Status</th>
+                            <th class="py-3 px-4 font-semibold w-24" data-i18n="th_srv_type">Start Type</th>
+                            <th class="py-3 px-4 font-semibold text-right" data-i18n="th_actions">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="services-table-body" class="text-sm">
+                        <!-- Rows will be populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Registry Page -->
+        <div id="page-registry" class="p-6 page-content absolute inset-0 overflow-y-auto hidden">
+                <!-- Registry Header -->
+                <div class="flex justify-between items-end mb-6">
+                    <div>
+                        <h2 class="text-xl font-bold text-textMain" data-i18n="reg_title">Kayıt Defteri (Registry)</h2>
+                        <p class="text-textMuted text-sm mt-1" data-i18n="reg_desc">Gelişmiş başlangıç kayıt defteri konumları (Salt-Okunur).</p>
+                    </div>
+                    <div class="flex gap-3">
+                        <button onclick="loadRegistry()" class="px-4 py-2 bg-bgCard hover:bg-bgMain text-textMain rounded shadow-sm border border-borderSubtle transition-colors text-sm font-medium flex items-center gap-2">
+                            <svg class="w-4 h-4 text-textMuted" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                            <span data-i18n="btn_reg_refresh">Yenile</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Registry Table -->
+                <div class="bg-bgCard rounded-lg shadow-sm border border-borderSubtle overflow-hidden">
+                    <div class="overflow-x-auto max-h-[calc(100vh-250px)] overflow-y-auto">
+                        <table class="w-full text-left border-collapse min-w-[800px]">
+                            <thead>
+                                <tr class="bg-bgMain border-b border-borderSubtle text-textMuted text-xs uppercase tracking-wider">
+                                    <th class="py-3 px-4 font-semibold" data-i18n="th_reg_location">Kayıt Yolu</th>
+                                    <th class="py-3 px-4 font-semibold" data-i18n="th_reg_name">İsim</th>
+                                    <th class="py-3 px-4 font-semibold w-24" data-i18n="th_reg_type">Tür</th>
+                                    <th class="py-3 px-4 font-semibold" data-i18n="th_reg_data">Veri</th>
+                                </tr>
+                            </thead>
+                            <tbody id="registry-table-body" class="text-sm">
+                                <!-- JS Injects Registry Keys here -->
+                                <tr>
+                                    <td colspan="4" class="p-8 text-center text-textMuted">
+                                        <svg class="w-8 h-8 mx-auto mb-2 opacity-50 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                                        Yükleniyor...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        <!-- Settings Page -->
+        <div id="page-settings" class="p-6 page-content absolute inset-0 overflow-y-auto hidden">
+            <h2 class="text-2xl font-bold mb-1" data-i18n="set_title">Settings</h2>
+            <p class="text-textMuted text-sm mb-6" data-i18n="set_desc">Application preferences and configuration.</p>
+            
+            <div class="bg-bgCard border border-borderSubtle rounded-lg p-6 max-w-2xl">
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-textMain mb-2" data-i18n="lbl_theme">Tema (Theme)</label>
+                    <select id="themeSelect" onchange="changeTheme()" class="bg-bgMain border border-borderSubtle rounded px-3 py-2 w-full focus:border-accentBlue focus:outline-none text-textMain">
+                        <option value="dark" data-i18n="opt_dark">Karanlık Tema (Varsayılan)</option>
+                        <option value="light" data-i18n="opt_light">Açık Tema</option>
+                    </select>
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-textMain mb-2" data-i18n="lbl_lang">Dil (Language)</label>
+                    <select id="langSelect" onchange="changeLanguageHandler()" class="bg-bgMain border border-borderSubtle rounded px-3 py-2 w-full focus:border-accentBlue focus:outline-none text-textMain">
+                        <option value="en">English</option>
+                        <option value="tr">Türkçe</option>
+                    </select>
+                </div>
+                <button onclick="saveSettings()" class="bg-accentBlue text-white px-4 py-2 rounded hover:bg-accentBlueHover transition-colors" data-i18n="btn_save">
+                    Kaydet (Save)
+                </button>
+            </div>
+        </div>
+
+        <!-- Logs Page -->
+        <div id="page-logs" class="p-6 page-content absolute inset-0 overflow-y-auto hidden">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h2 class="text-2xl font-bold mb-1" data-i18n="log_title">System Logs</h2>
+                    <p class="text-textMuted text-sm" data-i18n="log_desc">Real-time application logs.</p>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="clearLogs()" class="bg-bgCard border border-borderSubtle px-4 py-2 rounded text-sm font-medium hover:bg-borderSubtle transition-colors flex items-center gap-2 text-statusDanger">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                        <span data-i18n="btn_clear">Temizle</span>
+                    </button>
+                    <button onclick="loadLogs()" class="bg-accentBlue/20 text-accentBlue px-4 py-2 rounded text-sm font-medium hover:bg-accentBlue/30 transition-colors flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                        <span data-i18n="btn_refresh">Yenile</span>
+                    </button>
+                </div>
+            </div>
+            <div class="bg-codeBg border border-borderSubtle rounded-lg p-4 font-mono text-xs text-statusActive leading-relaxed h-[calc(100vh-250px)] overflow-y-auto whitespace-pre-wrap" id="logs-container">
+                > Yükleniyor...
+            </div>
+        </div>
+
+        <!-- Help Page -->
+        <div id="page-help" class="p-6 page-content absolute inset-0 overflow-y-auto hidden">
+            <h2 class="text-2xl font-bold mb-1" data-i18n="hlp_title">Help & Documentation</h2>
+            <p class="text-textMuted text-sm mb-6" data-i18n="hlp_desc">How to use StartUp Control.</p>
+            <div class="bg-bgCard border border-borderSubtle rounded-lg p-6 prose prose-invert max-w-4xl">
+                <h3 class="text-lg font-bold text-textMain mb-2" data-i18n="hlp_h3">Genel Kullanım</h3>
+                <p class="text-textMuted mb-4" data-i18n="hlp_p1">StartUp Control, Windows işletim sisteminizde başlangıçta otomatik olarak çalışan programları ve arka plan hizmetlerini (services) kontrol etmenizi sağlar.</p>
+                <ul class="list-disc list-inside text-textMuted mb-4 space-y-2">
+                    <li data-i18n="hlp_li1">Bir programın otomatik başlamasını engelleyebilir veya tekrar açabilirsiniz.</li>
+                    <li data-i18n="hlp_li2">Windows Görev Yöneticisi üzerinden devre dışı bırakılmış kayıtlar güvenli şekilde gösterilir.</li>
+                    <li data-i18n="hlp_li3">Sistem servislerini durdurabilir veya başlatabilirsiniz. (Yönetici yetkisi gerektirebilir)</li>
+                </ul>
+            </div>
+        </div>
+        
+        </div><!-- End Page Content Area -->
+
+        <!-- Footer Bar -->
+        <footer class="h-10 border-t border-borderSubtle bg-bgSidebar flex items-center justify-between px-6 text-xs text-textMuted">
+            <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-statusActive"></span>
+                <span data-i18n="footer_status">System Stable</span>
+                <span class="ml-4" id="footer-loaded-text">0 programs loaded</span>
+            </div>
+            <div data-i18n="footer_sys">System: Windows</div>
+        </footer>
+
+        <!-- Modal Overlay (Hidden by default) -->
+        <div id="modal-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+            <!-- Modal Content -->
+            <div class="bg-bgMain border border-borderSubtle rounded-lg w-[700px] shadow-2xl transform scale-95 transition-transform duration-300" id="modal-content">
+                <!-- Modal Header -->
+                <div class="flex items-center justify-between p-4 border-b border-borderSubtle bg-bgCard rounded-t-lg">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-accentBlue/20 rounded-md flex items-center justify-center text-accentBlue" id="modal-icon">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        </div>
+                        <div>
+                            <h2 class="font-bold text-lg leading-tight" id="modal-title">Program Name</h2>
+                            <p class="text-xs text-textMuted flex items-center gap-1">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                                DOĞRULANMIŞ YAYINCI
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div id="modal-warning-pill" class="hidden bg-statusDisabled/20 border border-statusDisabled/50 text-statusDisabled px-3 py-1 rounded text-xs font-semibold flex items-center gap-1">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                            Task Manager Devre Dışı
+                        </div>
+                        <button onclick="closeModal()" class="text-textMuted hover:text-textMain">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="p-6">
+                    <!-- General Info -->
+                    <div class="border border-borderSubtle rounded-md mb-4 bg-bgMain">
+                        <div class="bg-bgCard px-4 py-2 text-xs font-bold text-textMuted uppercase flex items-center gap-2 border-b border-borderSubtle">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                            GENEL BİLGİLER
+                        </div>
+                        <div class="p-4 space-y-4 text-sm">
+                            <div class="flex">
+                                <div class="w-32 font-semibold text-textMuted flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                                    <span data-i18n="th_name">Program Adı</span>
+                                </div>
+                                <div class="font-medium" id="modal-prog-name">Discord</div>
+                            </div>
+                            <div class="flex">
+                                <div class="w-32 font-semibold text-textMuted flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg>
+                                    Dosya Yolu
+                                </div>
+                                <div class="bg-bgCard border border-borderSubtle p-2 rounded text-textMuted text-xs font-mono break-all flex-1" id="modal-prog-path">
+                                    "C:\Users\...\Update.exe" --processStart Discord.exe
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-32 font-semibold text-textMuted flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                                    <span data-i18n="th_status">Durum</span>
+                                </div>
+                                <div class="font-bold" id="modal-prog-status">Task Manager Devre Dışı</div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-32 font-semibold text-textMuted flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                    <span data-i18n="th_location">Konum</span>
+                                </div>
+                                <div class="text-textMuted" id="modal-prog-location">HKCU\Run</div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-32 font-semibold text-textMuted flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2m0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                                    <span data-i18n="th_impact">Etki</span>
+                                </div>
+                                <div class="flex items-center gap-2" id="modal-prog-impact">
+                                    <div class="flex gap-1">
+                                        <div class="w-3 h-1.5 bg-statusDisabled rounded-full"></div>
+                                        <div class="w-3 h-1.5 bg-statusDisabled rounded-full"></div>
+                                        <div class="w-3 h-1.5 bg-borderSubtle rounded-full"></div>
+                                    </div>
+                                    <span class="text-statusDisabled font-bold text-sm">Orta</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- File Info -->
+                    <div class="border border-borderSubtle rounded-md mb-4 bg-bgMain">
+                        <div class="bg-bgCard px-4 py-2 text-xs font-bold text-textMuted uppercase flex items-center gap-2 border-b border-borderSubtle">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                            DOSYA BİLGİLERİ
+                        </div>
+                        <div class="p-4 bg-codeBg font-mono text-xs text-statusActive leading-relaxed h-48 overflow-y-auto" id="modal-file-info">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="p-4 border-t border-borderSubtle bg-bgMain flex justify-between items-center rounded-b-lg">
+                    <div class="flex gap-2">
+                        <button onclick="openFolder()" class="flex items-center gap-2 px-4 py-2 border border-borderSubtle text-textMuted hover:text-textMain hover:bg-bgCard rounded text-sm font-medium transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg>
+                            Klasörü Aç
+                        </button>
+                        <button onclick="searchInternet()" class="flex items-center gap-2 px-4 py-2 border border-borderSubtle text-textMuted hover:text-textMain hover:bg-bgCard rounded text-sm font-medium transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                            İnternette Ara
+                        </button>
+                    </div>
+                    <div class="flex gap-2">
+                        <button id="btn-enable" onclick="enableProgram()" class="flex items-center gap-2 px-4 py-2 bg-statusActive text-white rounded text-sm font-bold hover:bg-emerald-600 transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span data-i18n="action_enable">Etkinleştir</span>
+                        </button>
+                        <button id="btn-uninstall" onclick="uninstallProgram()" class="flex items-center gap-2 px-4 py-2 bg-statusDanger text-white rounded text-sm font-bold hover:bg-red-600 transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                            Kaldır
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Custom Dialog Modal (Hidden by default) -->
+    <div id="dialog-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+        <div id="dialog-content" class="bg-bgMain border border-borderSubtle rounded-lg w-[400px] shadow-2xl transform scale-95 transition-transform duration-300">
+            <div class="p-5 border-b border-borderSubtle bg-bgCard rounded-t-lg">
+                <h2 id="dialog-title" class="font-bold text-lg text-textMain leading-tight">Uyarı</h2>
+            </div>
+            <div class="p-5">
+                <p id="dialog-message" class="text-textMuted text-sm whitespace-pre-wrap"></p>
+            </div>
+            <div class="p-4 border-t border-borderSubtle bg-bgMain flex justify-end gap-3 rounded-b-lg" id="dialog-buttons">
+                <!-- Buttons injected by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Banner (Hidden by default) -->
+    <div id="update-banner" class="fixed bottom-4 right-4 bg-accentBlue text-white p-4 rounded-lg shadow-lg flex items-start gap-4 transform translate-y-20 opacity-0 transition-all duration-500 z-50 pointer-events-none hidden">
+        <div class="bg-white/20 p-2 rounded">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        </div>
+        <div class="flex-1 pointer-events-auto">
+            <h3 class="font-bold" id="update-title" data-i18n="update_available">Yeni Sürüm Mevcut!</h3>
+            <p class="text-sm text-blue-100 mt-1 max-w-xs" id="update-desc"></p>
+            <div class="mt-3 flex gap-2">
+                <button onclick="downloadUpdate()" class="bg-white text-accentBlue px-3 py-1.5 rounded text-sm font-bold hover:bg-gray-100 transition-colors" data-i18n="btn_download">İndir</button>
+                <button onclick="dismissUpdate()" class="px-3 py-1.5 rounded text-sm hover:bg-white/10 transition-colors" data-i18n="dlg_btn_cancel">İptal</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+# BAHD Win StartUp Control - Requirements
+
+# Built-in Python Modules
+# winreg - For Windows registry access
+# os - For file system operations
+# subprocess - For executing system commands
+# socket, urllib, json, time, logging, webbrowser, etc.
+
+# Third-Party Dependencies
+psutil>=5.9.0
+pywebview>=5.3.2
+pywin32>=308
+pyinstaller>=6.11.1
